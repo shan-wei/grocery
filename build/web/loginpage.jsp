@@ -78,15 +78,11 @@
     </style>
 </head>
 <body>
-    <input type="hidden" id="status" value="<%= request.getAttribute("status") %>">
+    
     <div class="wrapper">
         <header>Login Form</header>
-        <div class="error">
-            <% if(request.getAttribute("status") != null) { %>
-            <p class="error">Invalid login credentials. Please try again.</p>
-            <% } %>
-        </div>
-        <form action="${pageContext.request.contextPath}/custLogin" method="post">
+       
+        <form action="custLogin" method="post">
             <div class="field email">
                 <div class="input-area">
                     <input type="email" name="email" placeholder="Email Address" required>

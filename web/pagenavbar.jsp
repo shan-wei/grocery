@@ -37,6 +37,10 @@
                         </div>
                     </div>
                     <a href="contact.html" class="nav-item nav-link">Contact Us</a>
+                    <% String email = (String) session.getAttribute("email"); %>
+                    <% if (email != null) { %>
+                        <a href="logout" class="nav-item nav-link">Logout</a>
+                    <% } %>
                 </div>
                 <div class="d-none d-lg-flex ms-2">
                     <a class="btn-sm-square bg-white rounded-circle ms-3" href="">
