@@ -55,6 +55,10 @@
                         <span class="details">Confirm Password</span>
                         <input type="password" name="re_pass" id="re_pass" placeholder="Confirm your password" required maxlength="100">
                     </div>
+                    <div class="input-box">
+                        <span class="details">Profile Picture</span>
+                        <input type="file" name="image" id="image" required>
+                    </div>
                 </div>
 
                 <div class="button">
