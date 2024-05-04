@@ -77,12 +77,10 @@
         }
     </style>
 </head>
-<body>
-    
+<body>   
     <div class="wrapper">
-        <header>Login Form</header>
-       
-        <form action="custLogin" method="post">
+        <header>Administration Login Form</header>
+        <form action="adminLogin" method="post">
             <div class="field email">
                 <div class="input-area">
                     <input type="email" name="email" placeholder="Email Address" required>
@@ -102,7 +100,7 @@
             <div class="pass-txt"><a href="#" onclick="showForgotPasswordModal()">Forgot password?</a></div>
             <input type="submit" value="Login">
         </form>
-        <div class="sign-txt">Not yet member? <a href="#">Signup now</a></div>
+       
     </div>
             
     <!-- Modal for entering email -->

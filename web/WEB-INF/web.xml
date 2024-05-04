@@ -24,6 +24,14 @@
         <servlet-name>AddCustomerServlet</servlet-name>
         <servlet-class>controller.AddCustomerServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>adminLogin</servlet-name>
+        <servlet-class>controller.adminLogin</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>logout</servlet-name>
+        <servlet-class>controller.logout</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>custRegister</servlet-name>
         <url-pattern>/custRegister</url-pattern>
@@ -47,5 +55,13 @@
     <servlet-mapping>
         <servlet-name>AddCustomerServlet</servlet-name>
         <url-pattern>/AddCustomerServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>adminLogin</servlet-name>
+        <url-pattern>/adminLogin</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>logout</servlet-name>
+        <url-pattern>/logout</url-pattern>
     </servlet-mapping>
 </web-app>

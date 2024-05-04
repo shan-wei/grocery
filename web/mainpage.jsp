@@ -32,8 +32,13 @@
                             <div class="row justify-content-start">
                                 <div class="col-lg-7">
                                     <h1 class="display-2 mb-5 animated slideInDown">How about "Fresh Harvest Market"?</h1>
-                                    <a href="" class="btn btn-primary rounded-pill py-sm-3 px-sm-5">Login</a>
-                                    <a href="" class="btn btn-secondary rounded-pill py-sm-3 px-sm-5 ms-3">Register</a>
+                                    
+
+                                    <% if (email == null) { %>
+                                        <a href="loginpage.jsp" class="btn btn-primary rounded-pill py-sm-3 px-sm-5">Login</a>
+                                        <a href="registerpage.jsp" class="btn btn-secondary rounded-pill py-sm-3 px-sm-5 ms-3">Register</a>
+                                    <% } %>
+                                    
                                 </div>
                             </div>
                         </div>
@@ -45,9 +50,12 @@
                         <div class="container">
                             <div class="row justify-content-start">
                                 <div class="col-lg-7">
-                                    <h1 class="display-2 mb-5 animated slideInDown">Organic Oasis Market</h1>
-                                    <a href="" class="btn btn-primary rounded-pill py-sm-3 px-sm-5">Login</a>
-                                    <a href="" class="btn btn-secondary rounded-pill py-sm-3 px-sm-5 ms-3">Register</a>
+                                    <h1 class="display-2 mb-5 animated slideInDown">Organic Oasis Market</h1>                               
+
+                                    <% if (email == null) { %>
+                                        <a href="loginpage.jsp" class="btn btn-primary rounded-pill py-sm-3 px-sm-5">Login</a>
+                                        <a href="registerpage.jsp" class="btn btn-secondary rounded-pill py-sm-3 px-sm-5 ms-3">Register</a>
+                                    <% } %>
                                 </div>
                             </div>
                         </div>

@@ -119,6 +119,9 @@ public boolean loginCustomer(String email, String password) {
         
         // Return true if any customer is found
         return !resultList.isEmpty();
+    } catch (Exception e) {
+        e.printStackTrace();
+        throw new RuntimeException("Error deleting customer: " + e.getMessage());
     } finally {
         em.close();
     }
@@ -146,6 +149,64 @@ public List<Customer> getAllCustomers() {
         // Execute JPQL query to select all customers
         Query query = em.createQuery("SELECT c FROM Customer c");
         return query.getResultList(); // Return the list of customers
+    } catch (Exception e) {
+        e.printStackTrace();
+        throw new RuntimeException("Error deleting customer: " + e.getMessage());
+    } finally {
+        em.close();
+    }
+}
+
+public void updateCustomer(String custID, String custIC, String custFName, String custLName, String custEmail,
+                           String custContactNumber, String custAddress, String custPassword) {
+    EntityManager em = emf.createEntityManager();
+
+    try {
+        // Find the customer by ID
+        Customer customer = em.find(Customer.class, custID);
+        if (customer != null) {
+            // Update customer properties
+            customer.setCustic(custIC);
+            customer.setCustfname(custFName);
+            customer.setCustlname(custLName);
+            customer.setCustemail(custEmail);
+            customer.setCustcontactnumber(custContactNumber);
+            customer.setCustaddress(custAddress);
+            customer.setCustpassword(custPassword);
+
+            em.merge(customer); // Merge the updated customer entity into the persistence context
+        } else {
+            // Handle case where customer with the given ID is not found
+            throw new IllegalArgumentException("Customer with ID " + custID + " not found");
+        }
+    } catch (Exception e) {
+        e.printStackTrace();
+        throw new RuntimeException("Error updating customer: " + e.getMessage());
+    } finally {
+        em.close();
+    }
+}
+
+public void addCustomer(String custIC, String custFName, String custLName, String custEmail,
+                        String custContactNumber, String custAddress, String custPassword, String custID) {
+    EntityManager em = emf.createEntityManager();
+
+    Customer customer = new Customer();
+    customer.setCustic(custIC);
+    customer.setCustfname(custFName);
+    customer.setCustlname(custLName);
+    customer.setCustemail(custEmail);
+    customer.setCustcontactnumber(custContactNumber);
+    customer.setCustaddress(custAddress);
+    customer.setCustpassword(custPassword);
+    customer.setCustid(custID);
+    customer.setCustjoindate(java.sql.Date.valueOf(java.time.LocalDate.now()));
+
+    try {
+        em.persist(customer);
+    } catch (Exception e) {
+        e.printStackTrace();
+        throw new RuntimeException("Error adding customer: " + e.getMessage());
     } finally {
         em.close();
     }
