@@ -4,47 +4,53 @@
  */
 package controller;
 
-import entity.Customer;
-import jakarta.servlet.RequestDispatcher;
+import jakarta.annotation.Resource;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import java.io.*;
-import java.sql.*;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import jakarta.servlet.http.Part;
+import jakarta.transaction.UserTransaction;
 import model.CustomerService;
 
 public class custLogin extends HttpServlet {
-
-    @Override
+    
+    @PersistenceContext
+    EntityManager em;
+    @Resource
+    UserTransaction utx;
+    
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-//        CustomerService customerService = new CustomerService();       
-//       
-//        try {
-//            String CUSTEMAIL = request.getParameter("email");
-//            String CUSTPASSWORD = request.getParameter("pass");
-//            
-//            boolean isLoggedIn = customerService.loginCustomer(CUSTEMAIL, CUSTPASSWORD);
-//            String custID = customerService.getCustomerIdByEmail(CUSTEMAIL);
-//            if(isLoggedIn) {
-//                HttpSession session = request.getSession();
-//                session.setAttribute("custID", custID);
-//                session.setAttribute("role", "customer");
-//                session.setAttribute("email", CUSTEMAIL);
-//                response.sendRedirect("custHomepage.jsp");
-//            } else {
-//                // Handle incorrect login credentials
-//                request.setAttribute("errorMessage", "Incorrect email or password.");
-//                request.getRequestDispatcher("custLogin.jsp").forward(request, response);
-//            }
-//        } catch (SQLException ex) {
-//            request.setAttribute("errorMessage", "Error: " + ex.getMessage());
-//            request.getRequestDispatcher("custLogin.jsp").forward(request, response);
-//        }
+        CustomerService customerService = new CustomerService();       
+       
+        try {
+            String CUSTEMAIL = request.getParameter("email");
+            String CUSTPASSWORD = request.getParameter("pass");
+            
+            utx.begin();
+            boolean isLoggedIn = customerService.loginCustomer(CUSTEMAIL, CUSTPASSWORD);
+            String custID = customerService.getCustomerIdByEmail(CUSTEMAIL);
+            utx.commit();
+            if(isLoggedIn) {
+                HttpSession session = request.getSession();
+                session.setAttribute("custID", custID);
+                session.setAttribute("role", "customer");
+                session.setAttribute("email", CUSTEMAIL);
+                response.sendRedirect("mainpage.jsp");
+            } else {
+                // Handle incorrect login credentials
+                request.setAttribute("errorMessage", "Incorrect email or password.");
+                request.getRequestDispatcher("loginpage.jsp").forward(request, response);
+            }
+        } catch (Exception ex) {
+            request.setAttribute("errorMessage", "Error: " + ex.getMessage());
+            request.getRequestDispatcher("loginpage.jsp").forward(request, response);
+        }
     }
 
     

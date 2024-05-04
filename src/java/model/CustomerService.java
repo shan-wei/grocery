@@ -11,11 +11,6 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.Query;
 import java.util.List;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import jakarta.servlet.http.Part;
 import java.io.InputStream;
@@ -113,7 +108,48 @@ public void regCustomer(String custIC, String custFName, String custLName, Strin
     }
 }
 
-   
+public boolean loginCustomer(String email, String password) {
+    EntityManager em = emf.createEntityManager();
+    try {
+        // Execute JPQL query to check if the customer exists with the given email and password
+        Query query = em.createQuery("SELECT c FROM Customer c WHERE c.custemail = :email AND c.custpassword = :password");
+        query.setParameter("email", email);
+        query.setParameter("password", password);
+        List<Customer> resultList = query.getResultList();
+        
+        // Return true if any customer is found
+        return !resultList.isEmpty();
+    } finally {
+        em.close();
+    }
+}
+
+public void deleteCustomer(String custID) {
+    EntityManager em = emf.createEntityManager();
+
+    try {
+ 
+        Customer customer = em.find(Customer.class, custID);
+        if (customer != null) {
+            em.remove(customer);
+        }
+
+    } catch (Exception e) {
+        e.printStackTrace();
+        throw new RuntimeException("Error deleting customer: " + e.getMessage());
+    }
+}
+
+public List<Customer> getAllCustomers() {
+    EntityManager em = emf.createEntityManager();
+    try {
+        // Execute JPQL query to select all customers
+        Query query = em.createQuery("SELECT c FROM Customer c");
+        return query.getResultList(); // Return the list of customers
+    } finally {
+        em.close();
+    }
+}
 
 public void close() {
     emf.close();
